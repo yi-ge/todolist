@@ -4,6 +4,7 @@ A minimalism vue + php to-do list.
 正在开发中
 
 前端来自：https://github.com/nourabusoud/vue-todo-list
+后端参考（灵感来源）：https://github.com/timbotron/taskshare
 
 需要PHP5.4及以上版本。
 
