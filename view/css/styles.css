@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -7,100 +7,142 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Normal'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-regular.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
-  
+
 /* open-sans-300 */
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-300.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-300.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Normal'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
-  
+
 /* open-sans-100 */
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 100;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-100.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-100.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Normal'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
-  
+
 /* open-sans-700 */
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-700.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-700.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Normal'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-700.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-700.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-700.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-700.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-700.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-700.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-700.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-700.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-700.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
-  
+
 /* open-sans-100italic */
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 100;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Italic'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-100italic.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
-  
+
 /* open-sans-300italic */
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 300;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Italic'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-300italic.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
-  
+
 /* open-sans-italic */
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.eot'); /* IE9 Compat Modes */
+  src: url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.eot');
+  /* IE9 Compat Modes */
   src: local('Open Sans'), local('OpenSans-Italic'),
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.svg#OpenSans') format('svg'); /* Legacy iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.woff') format('woff'),
+    /* Modern Browsers */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('//lib.baomitu.com/fonts/open-sans/open-sans-italic.svg#OpenSans') format('svg');
+  /* Legacy iOS */
 }
 
-body{
+body {
   font-size: 15px;
   font-family: 'Open Sans', sans-serif;
   color: #444;
@@ -118,7 +160,7 @@ body{
   display: none !important;
 }
 
-.todo-wrapper{
+.todo-wrapper {
   width: 400px;
   max-width: 100%;
   min-height: 500px;
@@ -126,30 +168,31 @@ body{
   border: 1px solid #eee;
   border-radius: 4px;
   padding: 40px 20px;
-  -webkit-box-shadow: 0 0 15px 0 rgba(0,0,0,0.05);
-  box-shadow: 0 0 15px 0 rgba(0,0,0,0.05);
+  -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
   background-color: #f4f7fc;
   overflow: hidden;
   position: relative;
 }
 
-.todo-title{
+.todo-title {
   font-size: 1.2em;
   color: #f65c65;
   font-weight: normal;
 }
 
-form{
+form {
   overflow: overlay;
 }
 
-form label{
+form label {
   display: block;
   text-align: center;
   font-size: 1.2em;
 }
 
-.btn, input {
+.btn,
+input {
   line-height: 2em;
   border-radius: 3px;
   border: 0;
@@ -159,24 +202,29 @@ form label{
   font-size: 1em;
 }
 
-input[type='text'] {
-  border: 1px solid #ddd; 
+.input-todo {
   min-width: 80%;
+}
+
+input[type='text'] {
+  border: 1px solid #ddd;
+  min-width: 100%;
   transition: all ease-in 0.25s;
 }
 
-input:focus{
+input:focus {
   outline: none;
   border: 1px solid #a3b1ff;
 }
 
-input::placeholder{
-  color: rgba(0,0,0,0.3);
+input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
   font-style: italic;
 }
 
 /* disable ios zoom on focus */
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
   select,
   textarea,
   input {
@@ -184,7 +232,8 @@ input::placeholder{
   }
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
   select:focus,
   textarea:focus,
   input:focus {
@@ -193,9 +242,9 @@ input::placeholder{
 }
 
 
-.btn{
+.btn {
   text-align: center;
-  font-weight: bold; 
+  font-weight: bold;
   cursor: pointer;
   border-width: 1px;
   border-style: solid;
@@ -214,22 +263,22 @@ input::placeholder{
   float: right;
 }
 
-.btn-add.active{
+.btn-add.active {
   background: #6664ff;
   border-color: #6664ff;
   pointer-events: visible;
 }
 
-.btn-add.active:hover{
+.btn-add.active:hover {
   background: #4442f6;
   border-color: #4442f6;
 }
 
-.btn-add:active{
+.btn-add:active {
   transform: scale(0.95);
 }
 
-.control-buttons{
+.control-buttons {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -237,7 +286,8 @@ input::placeholder{
   width: 100%;
   text-align: center;
 }
-.btn-secondary{
+
+.btn-secondary {
   display: inline-block;
   position: relative;
   border: 0;
@@ -245,7 +295,7 @@ input::placeholder{
   margin: 0 10px;
 }
 
-.btn-secondary:after{
+.btn-secondary:after {
   position: absolute;
   content: '';
   width: 0;
@@ -256,41 +306,43 @@ input::placeholder{
   transition: all ease-in 0.25s;
 }
 
-.btn-secondary:hover:after{
+.btn-secondary:hover:after {
   width: 100%;
 }
 
-ul.todo-list{
+ul.todo-list {
   padding: 0;
   margin-bottom: 30px;
 }
 
-ul.todo-list li{
+ul.todo-list li {
   position: relative;
   list-style-type: none;
   display: block;
   margin: 10px 0;
   background: #e0e8f5;
   border-radius: 3px;
-  padding-left: 38px; /* custom checkbox width + 16 */
+  padding-left: 38px;
+  /* custom checkbox width + 16 */
   padding-top: 12px;
   padding-bottom: 12px;
-  padding-right: 49px; /* delete button + 5 */ 
+  padding-right: 49px;
+  /* delete button + 5 */
   overflow: hidden;
 }
 
-ul.todo-list.archived li{
+ul.todo-list.archived li {
   background: #fff;
 }
 
-.todo-text{
+.todo-text {
   position: relative;
   display: inline-block;
   padding: 0 0.5em;
 }
 
 
-ul.todo-list li .delete{
+ul.todo-list li .delete {
   position: absolute;
   height: 100%;
   top: 50%;
@@ -304,7 +356,7 @@ ul.todo-list li .delete{
   transition: all ease-in 0.25s;
 }
 
-ul.todo-list li .delete:after{
+ul.todo-list li .delete:after {
   position: absolute;
   content: '';
   width: 16px;
@@ -319,22 +371,22 @@ ul.todo-list li .delete:after{
   transition: all ease-in 0.25s;
 }
 
-ul.todo-list li:hover .delete{
+ul.todo-list li:hover .delete {
   width: 44px;
   opacity: 1;
 }
 
-ul.todo-list li:hover .delete:after{
+ul.todo-list li:hover .delete:after {
   transform: translate(-50%, -50%) scale(1);
 }
-  
-.todo-checkbox{
-  position: absolute; 
+
+.todo-checkbox {
+  position: absolute;
   opacity: 0;
   display: none;
 }
 
-.todo-checkbox + label {
+.todo-checkbox+label {
   position: absolute;
   cursor: pointer;
   left: 10px;
@@ -347,7 +399,7 @@ ul.todo-list li:hover .delete:after{
   background-color: #fff;
 }
 
-.todo-checkbox:checked + label:after{
+.todo-checkbox:checked+label:after {
   position: absolute;
   content: '';
   top: 30%;
@@ -360,44 +412,151 @@ ul.todo-list li:hover .delete:after{
   transform: rotate(-45deg) translate(-50%, -50%);
 }
 
-.todo-checkbox:checked + label:after{
+.todo-checkbox:checked+label:after {
   display: block;
 }
 
-.todo-checkbox:checked ~ .todo-text{
+.todo-checkbox:checked~.todo-text {
   color: #888;
   text-decoration: line-through
 }
 
-.status.free{
+.status.free {
   font-weight: bold;
   text-align: center;
   margin: 40px 0;
 }
-.status.free img{
+
+.status.free img {
   display: block;
   width: 50px;
   margin: 10px auto;
   vertical-align: middle;
 }
 
-.todo-item-enter-active, .todo-item-leave-active {
+.todo-item-enter-active,
+.todo-item-leave-active {
   transition: opacity ease 0.25s, transform ease-in-out 0.3s;
   transform-origin: left center;
 }
 
 /* .todo-item-leave-active below version 2.1.8 */
-.todo-item-enter, .todo-item-leave-to {
+.todo-item-enter,
+.todo-item-leave-to {
   opacity: 0;
   transform: translateX(100%);
 }
 
- 
-.slide-fade-enter-active, .slide-fade-leave-active {
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s ease;
 }
+
 /* .slide-fade-leave-active below version 2.1.8 */
-.slide-fade-enter, .slide-fade-leave-to {  
+.slide-fade-enter,
+.slide-fade-leave-to {
   transform: scale(1.1);
   opacity: 0;
+}
+
+.input-board {
+  margin-top: 60px;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+}
+
+.circle1,
+.circle2,
+.circle3,
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -30px 0 0 -30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: #F45B6C;
+  user-select: none;
+  cursor: pointer;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -35px 0 0 -35px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background: #F0547B;
+  text-align: center;
+  line-height: 70px;
+  color: #EAEAEA;
+  font-size: 16px;
+  font-family: '';
+}
+
+.center:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  right: -100px;
+  bottom: -100px;
+  pointer-events: none;
+  background-color: #F0547B;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  opacity: 0;
+  transition: all 0.3s;
+  border-radius: 50%;
+}
+
+.center:active:after {
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0s;
+}
+
+.circle1 {
+  -webkit-animation: circle 3s linear infinite;
+  animation: circle 3s linear infinite;
+}
+
+.circle2 {
+  -webkit-animation: circle 3s linear 0.8s infinite;
+  animation: circle 3s linear 0.8s infinite;
+}
+
+.circle3 {
+  -webkit-animation: circle 3s linear 1.6s infinite;
+  /* Safari and Chrome */
+  animation: circle 3s linear 1.6s infinite;
+}
+
+@-webkit-keyframes circle {
+
+  /* Safari and Chrome */
+  from {
+    opacity: 1;
+    -webkit-transform: scale(0);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: scale(3);
+  }
 }

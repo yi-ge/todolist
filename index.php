@@ -16,4 +16,6 @@ $f3->route('GET /',
     }
 );
 
+$f3->route('GET /new', 'Board->new_board');
+
 $f3->run();
