@@ -20,7 +20,7 @@ class Board
                         LEFT JOIN tasks ON tasks.tasklistid=tasklists.id
                         WHERE boards.name=?
                         ORDER BY listid ASC,taskid DESC";
-        $results = $this->db->exec($sql, $this->f3->get('PARAMS.boardcode'));
+        $results = $this->db->exec($sql, $this->f3->get('boardcode'));
         $json_array = array();
         if (count($results) > 0) //is at least 1 list
         {
@@ -68,6 +68,7 @@ class Board
     }
     public function new_board()
     {
+        header('Content-Type:application/json; charset=utf-8');
         if (isset($_POST['board_name'])) {
             $new_name = $_POST['board_name'];
         }
@@ -83,12 +84,20 @@ class Board
             $rows = $this->db->exec("SELECT id FROM boards WHERE name=?", $new_name);
         }
         if ($this->db->exec("INSERT INTO boards (name) VALUES (?)", $new_name)) {
-            $this->f3->reroute('/b/' . $new_name);
+            // $this->f3->reroute('/b/' . $new_name);
+            $result = array(
+                "status" => 1,
+                "result" => array(
+                    "name" => $new_name
+                )
+            );
         } else {
-            $this->f3->reroute('/error/1000');
+            $result = array(
+                "status" => 2,
+                "msg" => "创建新board失败"
+            );    
         }
-        //TODO make an error handler page.
-        //var_dump($this->db);
+        echo utf8_encode(json_encode($result));
     }
     public function post()
     {
