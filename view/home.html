@@ -186,7 +186,9 @@
         return null;
       },
       start (val) {
-        axios.get('/start').then(function (result) {
+        axios.post('/start', {
+          username: newTodo
+        }).then(function (result) {
           if (result.data.status === 1) {
             // console.log(result.data.result.name)
             window.location.href = window.location.origin + "/?b=" + result.data.result.name
