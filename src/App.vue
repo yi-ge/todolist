@@ -6,7 +6,7 @@
                   wrap>
           <v-flex text-xs-center>
             <!-- header -->
-            <h1 class="primary--text display-3 font-weight-medium my-3">TODOS</h1>
+            <h1 class="primary--text display-3 font-weight-medium my-3">To-do List</h1>
             <v-card>
               <v-list class="pa-0">
                 <v-list-tile>
@@ -140,7 +140,7 @@ export default {
     }
   },
   watch: {
-    todo (newVal) {
+    todos (newVal) {
       window.localStorage.setItem('todolist', JSON.stringify(newVal))
     }
   },
@@ -183,11 +183,11 @@ export default {
     removeTodo (todo) {
       this.todos.splice(this.todos.indexOf(todo), 1)
     },
-    toggleTodo () {
-      this.todo.done = !this.todo.done
+    toggleTodo (todo) {
+      todo.done = !todo.done
     },
-    editTodo (value) {
-      this.todo.text = value
+    editTodo (todo, value) {
+      todo.text = value
     },
     toggleAll (done) {
       this.todos.forEach((todo) => {
@@ -202,22 +202,20 @@ export default {
     },
     doneEdit (e) {
       const value = e.target.value.trim()
+      console.log(this)
       const { todo } = this
       if (!value) {
         this.removeTodo(todo)
       } else if (this.editing) {
-        this.editTodo({
-          todo,
-          value
-        })
+        this.editTodo(todo, value)
         this.editing = false
       }
     },
     cancelEdit () {
       this.editing = false
     },
-    filter () {
-
+    filter (key) {
+      console.log(key)
     }
   },
   filters: {
