@@ -4,13 +4,27 @@ import axios from 'axios'
 import './registerServiceWorker'
 import Vuetify from 'vuetify'
 import moment from 'moment'
+import { getToken } from './util'
+import { BASE_URL } from './config'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-Vue.prototype.$request = axios.create()
+if (!window.localStorage) {
+  alert('该系统需要localStorage支持')
+}
+
+Vue.prototype.$request = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    common: {
+      Authorization: getToken() ? 'Bearer ' + getToken() : ''
+    }
+  }
+})
+
 Vue.prototype.$moment = moment
-Vue.prototype.$isProd = process.env.NODE_ENV === 'production'
+Vue.prototype.$isDev = process.env.NODE_ENV !== 'production'
 
 /**
  * deepCopy Object or Array
