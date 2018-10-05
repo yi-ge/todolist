@@ -3,7 +3,7 @@ A minimalism vue + php to-do list.
 
 正在开发中
 
-前端来自：https://github.com/nourabusoud/vue-todo-list
+前端参考：https://github.com/nourabusoud/vue-todo-list、https://github.com/davidgaroro/vuetify-todo-pwa
 后端参考（灵感来源）：https://github.com/timbotron/taskshare  
 
 需要PHP5.4及以上版本。
@@ -136,4 +136,29 @@ Install the [URL rewrite module](http://www.iis.net/downloads/microsoft/url-rewr
     </rewrite>
   </system.webServer>
 </configuration>
+```
+
+## Project setup
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn run serve
+```
+
+### Compiles and minifies for production
+```
+yarn run build
+```
+
+### Run your tests
+```
+yarn run test
+```
+
+### Lints and fixes files
+```
+yarn run lint
 ```
