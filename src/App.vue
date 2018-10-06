@@ -125,6 +125,13 @@
                           </v-rating>
                         </v-flex>
                       </v-list-tile>
+                      <v-list-tile class="other-config-item">
+                        <v-flex md12>
+                          <div>
+                            <div class="color-item"></div>
+                          </div>
+                        </v-flex>
+                      </v-list-tile>
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
