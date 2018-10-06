@@ -9,28 +9,109 @@
             <h1 class="primary--text display-3 font-weight-medium my-3">To-do List</h1>
             <v-card>
               <v-list class="pa-0">
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-checkbox :input-value="allChecked"
-                                @change="toggleAll(!allChecked)"
-                                color="primary"
-                                v-if="todos.length > 0"></v-checkbox>
-                    <v-icon color="primary"
-                            v-else>check</v-icon>
-                  </v-list-tile-action>
-                  <v-text-field :label="'New todo input'"
-                                @keydown.enter="addTodo"
-                                autofocus
-                                browser-autocomplete="off"
-                                clearable
-                                color="primary"
-                                flat
-                                hide-details
-                                maxlength="1023"
-                                placeholder="What needs to be done?"
-                                solo
-                                v-model="newTodo"></v-text-field>
-                </v-list-tile>
+                <v-expansion-panel>
+                    <v-expansion-panel-content>
+                      <div slot="header">
+                        <v-list-tile>
+                          <v-list-tile-action>
+                            <v-checkbox :input-value="allChecked"
+                                        @change="toggleAll(!allChecked)"
+                                        color="primary"
+                                        v-if="todos.length > 0"></v-checkbox>
+                            <v-icon color="primary"
+                                    v-else>check</v-icon>
+                          </v-list-tile-action>
+                          <v-text-field :label="'New todo input'"
+                                        @keydown.enter="addTodo"
+                                        autofocus
+                                        browser-autocomplete="off"
+                                        clearable
+                                        color="primary"
+                                        flat
+                                        hide-details
+                                        maxlength="1023"
+                                        placeholder="What needs to be done?"
+                                        solo
+                                        v-model="newTodo"></v-text-field>
+                        </v-list-tile>
+                      </div>
+                      <v-card>
+                        <v-list-tile>
+                          <v-flex xs12 sm6>
+                            <v-menu
+                              ref="pickerDateMenu"
+                              v-model="template.pickerDateMenu"
+                              :close-on-content-click="false"
+                              :nudge-right="40"
+                              lazy
+                              transition="scale-transition"
+                              offset-y
+                              full-width
+                              max-width="290px"
+                              min-width="290px"
+                            >
+                            <v-combobox
+                              slot="activator"
+                              label="Picker Date"
+                              v-model="template.date"
+                              prepend-icon="event"
+                              clearable
+                              readonly
+                              flat
+                              hide-details
+                              solo
+                              persistent-hint
+                            ></v-combobox>
+                            <v-date-picker v-model="template.date" color="green" full-width no-title @input="template.pickerDateMenu = false" />
+                            </v-menu>
+                          </v-flex>
+                          <v-flex xs12 sm6>
+                            <v-dialog
+                              ref="pickerTimeMenu"
+                              v-model="template.pickerTimeMenu"
+                              :return-value.sync="template.time"
+                              persistent
+                              lazy
+                              full-width
+                              width="290px"
+                            >
+                            <v-combobox
+                              slot="activator"
+                              label="Picker Time"
+                              v-model="template.time"
+                              prepend-icon="access_time"
+                              clearable
+                              readonly
+                              flat
+                              solo
+                            ></v-combobox>
+                            <v-time-picker v-model="template.time" full-width color="green" format="24hr">
+                              <v-spacer></v-spacer>
+                              <v-btn flat color="primary" @click="template.pickerTimeMenu = false">Cancel</v-btn>
+                              <v-btn flat color="primary" @click="$refs.pickerTimeMenu.save(template.time)">OK</v-btn>
+                            </v-time-picker>
+                            </v-dialog>
+                          </v-flex>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-flex xs12>
+                            <v-radio-group v-model="template.type" row>
+                              <v-radio
+                                color="success"
+                                label="Feature"
+                                :value="'fueature'"
+                              ></v-radio>
+                              <v-radio
+                                color="error"
+                                label="Bug"
+                                :value="'bug'"
+                              ></v-radio>
+                            </v-radio-group>
+                          </v-flex>
+                        </v-list-tile>
+                      </v-card>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
               </v-list>
             </v-card>
             <!-- main -->
@@ -105,7 +186,12 @@ export default {
       },
       visibility: 'all',
       todos: JSON.parse(window.localStorage.getItem('todolist') || '[]'),
-      editing: false
+      template: {
+        pickerDateMenu: false,
+        date: null,
+        pickerTimeMenu: false,
+        time: null
+      }
     }
   },
   watch: {
