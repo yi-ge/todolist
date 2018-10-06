@@ -9,6 +9,7 @@ import { BASE_URL } from './config'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.min.css'
 
 if (!window.localStorage) {
   alert('该系统需要localStorage支持')
