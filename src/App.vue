@@ -6,21 +6,13 @@
                   wrap>
           <v-flex text-xs-center>
             <!-- header -->
-            <h1 class="primary--text display-3 font-weight-medium my-3">To-do List</h1>
-            <v-card>
+            <h1 class="primary--text display-3 font-weight-medium" v-if="!mobileMode">To-do List</h1>
+            <v-card class="add-todo" v-show="!mobileMode || showAddTodo">
               <v-list class="pa-0">
                 <v-expansion-panel>
                   <v-expansion-panel-content class="main-input">
                     <div slot="header">
                       <v-list-tile>
-                        <v-list-tile-action>
-                          <v-checkbox :input-value="allChecked"
-                                      @change="toggleAll(!allChecked)"
-                                      color="primary"
-                                      v-if="todos.length > 0"></v-checkbox>
-                          <v-icon color="primary"
-                                  v-else>check</v-icon>
-                        </v-list-tile-action>
                         <v-text-field :label="'New todo input'"
                                       @keydown.enter="addTodo"
                                       autofocus
@@ -60,10 +52,10 @@
                                         solo
                                         persistent-hint></v-combobox>
                             <v-date-picker v-model="template.date"
-                                           color="green"
-                                           full-width
-                                           no-title
-                                           @input="template.pickerDateMenu = false" />
+                                          color="green"
+                                          full-width
+                                          no-title
+                                          @input="template.pickerDateMenu = false" />
                           </v-menu>
                         </v-flex>
                         <v-flex xs5
@@ -85,35 +77,34 @@
                                         flat
                                         solo></v-combobox>
                             <v-time-picker v-model="template.time"
-                                           full-width
-                                           color="green"
-                                           format="24hr">
+                                          full-width
+                                          color="green"
+                                          format="24hr">
                               <v-spacer></v-spacer>
                               <v-btn flat
-                                     color="primary"
-                                     @click="template.pickerTimeMenu = false">Cancel</v-btn>
+                                    color="primary"
+                                    @click="template.pickerTimeMenu = false">Cancel</v-btn>
                               <v-btn flat
-                                     color="primary"
-                                     @click="$refs.pickerTimeMenu.save(template.time)">OK</v-btn>
+                                    color="primary"
+                                    @click="$refs.pickerTimeMenu.save(template.time)">OK</v-btn>
                             </v-time-picker>
                           </v-dialog>
                         </v-flex>
                       </v-list-tile>
                       <v-list-tile class="other-config-item">
-                        <v-flex md4 sm4 xs4>
-                          <div :class="'type' + (template.type === 'feature' ? ' type-select' : '')" @click="template.type = 'feature'">Feature</div>
-                          <div :class="'type' + (template.type === 'bug' ? ' type-select' : '')" @click="template.type = 'bug'">Bug</div>
-                          <!-- <v-radio-group v-model="template.type"
-                                          row>
-                            <v-radio color="success"
-                                      label="Feature"
-                                      :value="'feature'"></v-radio>
-                            <v-radio color="error"
-                                      label="Bug"
-                                      :value="'bug'"></v-radio>
-                          </v-radio-group> -->
+                        <v-flex md4
+                                sm4
+                                xs4>
+                          <div :class="'type' + (template.type === 'feature' ? ' type-select' : '')"
+                              @click="template.type = 'feature'">Feature</div>
+                          <div :class="'type' + (template.type === 'bug' ? ' type-select' : '')"
+                              style="margin-left: 5px"
+                              @click="template.type = 'bug'">Bug</div>
                         </v-flex>
-                        <v-flex md8 sm8 xs8 class="important-select">
+                        <v-flex md8
+                                sm8
+                                xs8
+                                class="important-select">
                           <v-rating v-model="template.rating">
                             <v-icon slot="item"
                                     slot-scope="props"
@@ -126,10 +117,12 @@
                         </v-flex>
                       </v-list-tile>
                       <v-list-tile class="other-config-item">
-                        <v-flex md12>
-                          <div>
-                            <div class="color-item"></div>
-                          </div>
+                        <v-flex md12
+                                class="colors">
+                          <div v-for="(item, index) of colors"
+                              :key="index"
+                              class="color-item"
+                              :style="{backgroundColor: item}"></div>
                         </v-flex>
                       </v-list-tile>
                     </v-card>
@@ -138,12 +131,16 @@
               </v-list>
             </v-card>
             <!-- main -->
-            <v-card class="mt-3"
+            <v-card :style="{marginTop: (mobileMode ? '0' : '16px')}"
                     v-show="todos.length">
               <v-progress-linear class="my-0"
                                  v-model="progressPercentage" />
               <v-card-actions class="px-3"
                               v-show="todos.length">
+                <v-checkbox :input-value="allChecked"
+                            @change="toggleAll(!allChecked)"
+                            class="toggle-all"
+                            color="primary"></v-checkbox>
                 <span class="primary--text">
                   {{ remaining }} {{ remaining | pluralize('item') }} left
                 </span>
@@ -186,6 +183,53 @@
         </v-layout>
       </v-container>
     </v-content>
+    <v-fab-transition v-show="!showAddTodo">
+      <v-btn
+        v-if="mobileMode"
+        color="pink"
+        dark
+        fixed
+        bottom
+        right
+        fab
+        style="bottom: 72px"
+        @click="showAddTodoHander"
+      >
+        <v-icon>add</v-icon>
+      </v-btn>
+    </v-fab-transition>
+    <v-bottom-nav :active.sync="bottomNav"
+                  :value="true"
+                  fixed
+                  color="#fff">
+      <v-btn color="teal"
+             flat
+             value="All">
+        <span>All</span>
+        <v-icon>format_list_bulleted</v-icon>
+      </v-btn>
+
+      <v-btn color="teal"
+             flat
+             value="Today">
+        <span>Today</span>
+        <v-icon>today</v-icon>
+      </v-btn>
+
+      <v-btn color="teal"
+             flat
+             value="Week">
+        <span>Week</span>
+        <v-icon>insert_invitation</v-icon>
+      </v-btn>
+
+      <v-btn color="teal"
+             flat
+             value="Month">
+        <span>Month</span>
+        <v-icon>date_range</v-icon>
+      </v-btn>
+    </v-bottom-nav>
   </v-app>
 </template>
 
@@ -200,6 +244,7 @@ export default {
   data () {
     return {
       newTodo: '',
+      mobileMode: window.outerWidth <= 400,
       filters: {
         all: todos => todos,
         active: todos => todos.filter(todo => !todo.done),
@@ -214,7 +259,10 @@ export default {
         time: null,
         rating: 1,
         type: ''
-      }
+      },
+      colors: ['#fff', '#9e9e9e', '#795548', '#ff9800', '#ffeb3b', '#8bc34a', '#03a9f4', '#673ab7', '#f44336'],
+      bottomNav: 'All',
+      showAddTodo: false
     }
   },
   watch: {
@@ -246,7 +294,15 @@ export default {
       }
     }
   },
+  mounted () {
+    window.onresize = () => {
+      this.mobileMode = (window.outerWidth <= 400)
+    }
+  },
   methods: {
+    showAddTodoHander () {
+      this.showAddTodo = true
+    },
     genColor (i) {
       const colors = ['green', 'purple', 'orange', 'indigo', 'red']
       return colors[i]
@@ -294,8 +350,8 @@ export default {
   background #f5f5f5
 
 #container
-  max-width 550px
-  padding 8px
+  max-width 400px
+  padding 8px 8px 80px 8px
 
 h1
   opacity 0.3
@@ -315,6 +371,17 @@ h1
   border-top 1px solid #f3f0f0
   padding-top 5px
 
+  .colors
+    .color-item
+      float left
+      width 20px
+      height 20px
+      margin-left 16px
+      box-shadow 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)
+
+      &:first-child
+        margin-left 3px
+
 .important-select
   text-align right
 
@@ -323,7 +390,7 @@ h1
       font-size 24px !important
 
 .type
-  color rgba(0,0,0,.54)
+  color rgba(0, 0, 0, 0.54)
   cursor pointer
   padding 4px
   float left
@@ -331,4 +398,8 @@ h1
 .type.type-select
   color #000
   font-weight 600
+
+.toggle-all
+  .v-input__slot
+    margin-bottom 8px !important
 </style>
