@@ -1,236 +1,118 @@
-<template>
-  <v-app id="app">
-    <v-content>
-      <v-container id="container">
-        <v-layout row
-                  wrap>
-          <v-flex text-xs-center>
-            <!-- header -->
-            <h1 class="primary--text display-3 font-weight-medium" v-if="!mobileMode">To-do List</h1>
-            <v-card class="add-todo" v-show="!mobileMode || showAddTodo">
-              <v-list class="pa-0">
-                <v-expansion-panel>
-                  <v-expansion-panel-content class="main-input">
-                    <div slot="header">
-                      <v-list-tile>
-                        <v-text-field :label="'New todo input'"
-                                      @keydown.enter="addTodo"
-                                      autofocus
-                                      browser-autocomplete="off"
-                                      clearable
-                                      color="primary"
-                                      flat
-                                      hide-details
-                                      maxlength="1023"
-                                      placeholder="What needs to be done?"
-                                      solo
-                                      v-model="newTodo"></v-text-field>
-                      </v-list-tile>
-                    </div>
-                    <v-card class="other-config">
-                      <v-list-tile>
-                        <v-flex xs7
-                                sm7>
-                          <v-menu ref="pickerDateMenu"
-                                  v-model="template.pickerDateMenu"
-                                  :close-on-content-click="false"
-                                  :nudge-right="40"
-                                  lazy
-                                  transition="scale-transition"
-                                  offset-y
-                                  full-width
-                                  max-width="290px"
-                                  min-width="290px">
-                            <v-combobox slot="activator"
-                                        label="Picker Date"
-                                        v-model="template.date"
-                                        prepend-icon="event"
-                                        clearable
-                                        readonly
-                                        flat
-                                        hide-details
-                                        solo
-                                        persistent-hint></v-combobox>
-                            <v-date-picker v-model="template.date"
-                                          color="green"
-                                          full-width
-                                          no-title
-                                          @input="template.pickerDateMenu = false" />
-                          </v-menu>
-                        </v-flex>
-                        <v-flex xs5
-                                sm5
-                                style="margin-left: 5%;">
-                          <v-dialog ref="pickerTimeMenu"
-                                    v-model="template.pickerTimeMenu"
-                                    :return-value.sync="template.time"
-                                    persistent
-                                    lazy
-                                    full-width
-                                    width="290px">
-                            <v-combobox slot="activator"
-                                        label="Picker Time"
-                                        v-model="template.time"
-                                        prepend-icon="access_time"
-                                        clearable
-                                        readonly
-                                        flat
-                                        solo></v-combobox>
-                            <v-time-picker v-model="template.time"
-                                          full-width
-                                          color="green"
-                                          format="24hr">
-                              <v-spacer></v-spacer>
-                              <v-btn flat
-                                    color="primary"
-                                    @click="template.pickerTimeMenu = false">Cancel</v-btn>
-                              <v-btn flat
-                                    color="primary"
-                                    @click="$refs.pickerTimeMenu.save(template.time)">OK</v-btn>
-                            </v-time-picker>
-                          </v-dialog>
-                        </v-flex>
-                      </v-list-tile>
-                      <v-list-tile class="other-config-item">
-                        <v-flex md4
-                                sm4
-                                xs4>
-                          <div :class="'type' + (template.type === 'feature' ? ' type-select' : '')"
-                              @click="template.type = 'feature'">Feature</div>
-                          <div :class="'type' + (template.type === 'bug' ? ' type-select' : '')"
-                              style="margin-left: 5px"
-                              @click="template.type = 'bug'">Bug</div>
-                        </v-flex>
-                        <v-flex md8
-                                sm8
-                                xs8
-                                class="important-select">
-                          <v-rating v-model="template.rating">
-                            <v-icon slot="item"
-                                    slot-scope="props"
-                                    :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'"
-                                    large
-                                    @click="props.click">
-                              {{ props.isFilled ? 'mdi-star-circle' : 'mdi-circle-outline' }}
-                            </v-icon>
-                          </v-rating>
-                        </v-flex>
-                      </v-list-tile>
-                      <v-list-tile class="other-config-item">
-                        <v-flex md12
-                                class="colors">
-                          <div v-for="(item, index) of colors"
-                              :key="index"
-                              class="color-item"
-                              :style="{backgroundColor: item}"></div>
-                        </v-flex>
-                      </v-list-tile>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-list>
-            </v-card>
-            <!-- main -->
-            <v-card :style="{marginTop: (mobileMode ? '0' : '16px')}"
-                    v-show="todos.length">
-              <v-progress-linear class="my-0"
-                                 v-model="progressPercentage" />
-              <v-card-actions class="px-3"
-                              v-show="todos.length">
-                <v-checkbox :input-value="allChecked"
-                            @change="toggleAll(!allChecked)"
-                            class="toggle-all"
-                            color="primary"></v-checkbox>
-                <span class="primary--text">
-                  {{ remaining }} {{ remaining | pluralize('item') }} left
-                </span>
-                <v-spacer></v-spacer>
-                <v-btn-toggle class="elevation-0"
-                              mandatory
-                              v-model="visibility"
-                              v-show="todos.length">
-                  <v-btn :key="key"
-                         :value="key"
-                         class="mx-0"
-                         color="primary"
-                         flat
-                         small
-                         @click="filter(key)"
-                         v-for="(val, key) in filters">
-                    {{ key | capitalize }}
-                  </v-btn>
-                </v-btn-toggle>
-              </v-card-actions>
-              <v-list class="pa-0">
-                <template v-for="todo in filteredTodos">
-                  <v-divider :key="`${todo.uid}-divider`"></v-divider>
-                  <Item :key="todo.uid"
-                        :todo.sync="todo"
-                        @removeTodo="removeTodo" />
-                </template>
-              </v-list>
-            </v-card>
-            <v-btn @click="clearCompleted"
-                   block
-                   class="mt-3"
-                   color="primary"
-                   depressed
-                   round
-                   v-show="todos.length > remaining">
-              Clear completed
-            </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-    <v-fab-transition v-show="!showAddTodo">
-      <v-btn
-        v-if="mobileMode"
-        color="pink"
-        dark
-        fixed
-        bottom
-        right
-        fab
-        style="bottom: 72px"
-        @click="showAddTodoHander"
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-    </v-fab-transition>
-    <v-bottom-nav :active.sync="bottomNav"
-                  :value="true"
-                  fixed
-                  color="#fff">
-      <v-btn color="teal"
-             flat
-             value="All">
-        <span>All</span>
-        <v-icon>format_list_bulleted</v-icon>
-      </v-btn>
-
-      <v-btn color="teal"
-             flat
-             value="Today">
-        <span>Today</span>
-        <v-icon>today</v-icon>
-      </v-btn>
-
-      <v-btn color="teal"
-             flat
-             value="Week">
-        <span>Week</span>
-        <v-icon>insert_invitation</v-icon>
-      </v-btn>
-
-      <v-btn color="teal"
-             flat
-             value="Month">
-        <span>Month</span>
-        <v-icon>date_range</v-icon>
-      </v-btn>
-    </v-bottom-nav>
-  </v-app>
+<template lang="pug">
+v-app#app
+  v-navigation-drawer(:clipped='$vuetify.breakpoint.lgAndUp' v-model='drawer' fixed app left clipped)
+    v-list(dense)
+      template(v-for='item in leftMenu')
+        v-layout(v-if='item.heading' :key='item.heading' row align-center)
+          v-flex(xs6)
+            v-subheader(v-if='item.heading')
+              | {{ item.heading }}
+          v-flex.text-xs-center(xs6)
+            a.body-2.black--text(href='#!') EDIT
+        v-list-group(v-else-if='item.children' v-model='item.model' :key='item.text' :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon)
+          v-list-tile(slot='activator')
+            v-list-tile-content
+              v-list-tile-title
+                | {{ item.text }}
+          v-list-tile(v-for='(child, i) in item.children' :key='i' @click='')
+            v-list-tile-action(v-if='child.icon')
+              v-icon {{ child.icon }}
+            v-list-tile-content
+              v-list-tile-title
+                | {{ child.text }}
+        v-list-tile(v-else :key='item.text' @click='')
+          v-list-tile-action
+            v-icon {{ item.icon }}
+          v-list-tile-content
+            v-list-tile-title
+              | {{ item.text }}
+  v-navigation-drawer(v-model='drawerRight' fixed app right clipped)
+    v-list(dense)
+      v-list-tile(@click.stop='')
+        v-list-tile-action
+          v-icon exit_to_app
+        v-list-tile-content
+          v-list-tile-title Open Temporary Drawer
+  v-toolbar(:clipped-left="$vuetify.breakpoint.lgAndUp" app fixed clipped-left clipped-right)
+    v-toolbar-side-icon(@click.stop="drawer = !drawer")
+    v-toolbar-title To-do List
+    v-spacer
+    v-btn(v-if="mobileMode" icon)
+      v-icon search
+    v-text-field(v-else hide-details prepend-icon='search' single-line)
+    v-toolbar-side-icon(@click.stop="drawerRight = !drawerRight")
+  v-content
+    v-container#container(fluid fill-height)
+      v-layout(row wrap)
+        v-flex(text-xs-center)
+          // add-todo
+          v-dialog(v-model="showAddTodo" width="400")
+            v-card.add-todo
+              v-list.pa-0
+                v-expansion-panel(v-model="addTodoExpansion")
+                  v-expansion-panel-content.main-input
+                    div(slot='header')
+                      v-list-tile
+                        v-text-field(:label="'New todo input'" @keydown.enter='addTodo' autofocus browser-autocomplete='off' clearable color='primary' flat hide-details maxlength='1023' placeholder='What needs to be done?' solo v-model='newTodo')
+                    v-card.other-config
+                      v-list-tile
+                        v-flex(xs7 sm7)
+                          v-menu(ref='pickerDateMenu' v-model='template.pickerDateMenu' :close-on-content-click='false' :nudge-right='40' lazy transition='scale-transition' offset-y full-width max-width='290px' min-width='290px')
+                            v-combobox(slot='activator' label='Picker Date' v-model='template.date' prepend-icon='event' clearable readonly flat hide-details solo persistent-hint)
+                            v-date-picker(v-model='template.date' color='green' full-width no-title @input='template.pickerDateMenu = false')
+                        v-flex(xs5 sm5 style='margin-left: 5%;')
+                          v-dialog(ref='pickerTimeMenu' v-model='template.pickerTimeMenu' :return-value.sync='template.time' persistent lazy full-width width='290px')
+                            v-combobox(slot='activator' label='Picker Time' v-model='template.time' prepend-icon='access_time' clearable readonly flat solo)
+                            v-time-picker(v-model='template.time' full-width color='green' format='24hr')
+                              v-spacer
+                              v-btn(flat color='primary' @click='template.pickerTimeMenu = false') Cancel
+                              v-btn(flat color='primary' @click='$refs.pickerTimeMenu.save(template.time)') OK
+                      v-list-tile.other-config-item
+                        v-flex(md4 sm4 xs4)
+                          div(:class="'type' + (template.type === 'feature' ? ' type-select' : '')" @click="template.type = 'feature'") Feature
+                          div(:class="'type' + (template.type === 'bug' ? ' type-select' : '')" style='margin-left: 5px' @click="template.type = 'bug'") Bug
+                        v-flex.important-select(md8 sm8 xs8)
+                          v-rating(v-model='template.rating')
+                            v-icon(slot='item' slot-scope='props' :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'" large @click='props.click')
+                              | {{ props.isFilled ? 'mdi-star-circle' : 'mdi-circle-outline' }}
+                      v-list-tile.other-config-item
+                        v-flex.colors(md12)
+                          .color-item(v-for='(item, index) of colors' :key='index' :style='{backgroundColor: item}')
+          // main
+          v-card.main(:style="{marginTop: (mobileMode ? '6px' : '16px')}" v-if='todos.length')
+            v-progress-linear.my-0(v-model='progressPercentage')
+            v-card-actions.px-3
+              v-checkbox.toggle-all(:input-value='allChecked' @change='toggleAll(!allChecked)' color='primary')
+              span.primary--text
+                | {{ remaining }} {{ remaining | pluralize('item') }} left
+              v-spacer
+              v-btn-toggle.elevation-0(mandatory v-model='visibility')
+                v-btn.mx-0(:key='key' :value='key' color='primary' flat small @click='filter(key)' v-for='(val, key) in filters')
+                  | {{ key | capitalize }}
+            v-list.pa-0
+              template(v-for='todo in filteredTodos')
+                v-divider(:key='`${todo.uid}-divider`')
+                Item(:key='todo.uid' :todo.sync='todo' @removetodo='removeTodo')
+          v-card(v-else)
+            | No Content.
+          v-btn.mt-3(@click='clearCompleted' block color='primary' depressed round v-show='todos.length > remaining')
+            | Clear completed
+  v-fab-transition(v-if='!showAddTodo')
+    v-btn(color='pink' dark fixed bottom right fab style='bottom: 72px' @click='showAddTodoHander')
+      v-icon add
+  v-bottom-nav(:active.sync='bottomNav' :value='true' fixed app color='#fff')
+    v-btn(color='teal' flat value='All')
+      span All
+      v-icon format_list_bulleted
+    v-btn(color='teal' flat value='Today')
+      span Today
+      v-icon today
+    v-btn(color='teal' flat value='Week')
+      span Week
+      v-icon insert_invitation
+    v-btn(color='teal' flat value='Month')
+      span Month
+      v-icon date_range
 </template>
 
 <script>
@@ -262,7 +144,42 @@ export default {
       },
       colors: ['#fff', '#9e9e9e', '#795548', '#ff9800', '#ffeb3b', '#8bc34a', '#03a9f4', '#673ab7', '#f44336'],
       bottomNav: 'All',
-      showAddTodo: false
+      showAddTodo: false,
+      addTodoExpansion: [true], // TODO:无效
+      drawer: null,
+      drawerRight: null,
+      leftMenu: [
+        { icon: 'contacts', text: 'Contacts' },
+        { icon: 'history', text: 'Frequently contacted' },
+        { icon: 'content_copy', text: 'Duplicates' },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'Labels',
+          model: true,
+          children: [
+            { icon: 'add', text: 'Create label' }
+          ]
+        },
+        {
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'More',
+          model: false,
+          children: [
+            { text: 'Import' },
+            { text: 'Export' },
+            { text: 'Print' },
+            { text: 'Undo changes' },
+            { text: 'Other contacts' }
+          ]
+        },
+        { icon: 'settings', text: 'Settings' },
+        { icon: 'chat_bubble', text: 'Send feedback' },
+        { icon: 'help', text: 'Help' },
+        { icon: 'phonelink', text: 'App downloads' },
+        { icon: 'keyboard', text: 'Go to the old version' }
+      ]
     }
   },
   watch: {
@@ -294,6 +211,9 @@ export default {
       }
     }
   },
+  created () {
+
+  },
   mounted () {
     window.onresize = () => {
       this.mobileMode = (window.outerWidth <= 400)
@@ -302,6 +222,9 @@ export default {
   methods: {
     showAddTodoHander () {
       this.showAddTodo = true
+      setTimeout(() => {
+        if (this.$refs.input) this.$refs.input.focus()
+      }, 50)
     },
     genColor (i) {
       const colors = ['green', 'purple', 'orange', 'indigo', 'red']
@@ -350,11 +273,8 @@ export default {
   background #f5f5f5
 
 #container
-  max-width 400px
+  min-width 400px
   padding 8px 8px 80px 8px
-
-h1
-  opacity 0.3
 
 .v-text-field .v-input__slot
   padding 0 !important
@@ -398,6 +318,9 @@ h1
 .type.type-select
   color #000
   font-weight 600
+
+.add-todo
+  padding 0
 
 .toggle-all
   .v-input__slot
