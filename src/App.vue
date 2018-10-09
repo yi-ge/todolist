@@ -49,7 +49,7 @@ v-app#app
           v-dialog(v-model="showAddTodo" width="400")
             v-card.add-todo
               v-list.pa-0
-                v-expansion-panel(v-model="addTodoExpansion")
+                v-expansion-panel(v-model="addTodoExpansion" expand)
                   v-expansion-panel-content.main-input
                     div(slot='header')
                       v-list-tile
@@ -78,6 +78,50 @@ v-app#app
                       v-list-tile.other-config-item
                         v-flex.colors(md12)
                           .color-item(v-for='(item, index) of colors' :key='index' :style='{backgroundColor: item}')
+                      v-list-tile.other-config-item
+                        v-flex
+                          v-combobox(v-model='template.tags' :items='tagList' label='Tag' chips clearable flat solo multiple)
+                            template(slot='selection' slot-scope='data')
+                              v-chip(:selected='data.selected' close @input='removeTag(data.item)')
+                                strong {{ data.item }}
+                      v-list-tile.other-config-item
+                        v-flex
+                          v-text-field(v-model='template.urls[0]' label='URL' solo flat clearable append-icon="close")
+                            v-menu(slot='append-outer' style='top: -12px')
+                              v-btn(slot='activator')
+                                v-icon(left) menu
+                                |                 Menu
+                              v-card
+                                v-card-text.pa-4
+                                  v-btn(large flat color='primary' @click='')
+                                    v-icon(left) mdi-target
+                                    | Click me
+                      v-list-tile.other-config-item
+                        v-flex
+                          .upload-drag
+                            .upload
+                              ul(v-if='template.files.length')
+                                li(v-for='(file, index) in template.files' :key='file.id')
+                                  span {{file.name}}
+                                  |  -
+                                  span {{file.size | formatSize}}
+                                  |  -
+                                  span(v-if='file.error') {{file.error}}
+                                  span(v-else-if='file.success') success
+                                  span(v-else-if='file.active') active
+                                  span(v-else-if='file.active') active
+                                  span(v-else='')
+                              .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
+                                h3 Drop files to upload
+                              .upload-control
+                                FileUpload(post-action='/upload/post' :multiple='true' :drop='true' :drop-directory='true' v-model='template.files' ref='upload')
+                                  v-btn Select files
+                                    v-icon(right) attach_file
+                                v-btn(v-if='!$refs.upload || !$refs.upload.active' color="success" @click.prevent='$refs.upload.active = true')
+                                  | Start Upload
+                                  v-icon(right dark) cloud_upload
+                                v-btn(v-else @click.prevent='$refs.upload.active = false')
+                                  | Stop Upload
           // main
           v-card.main(:style="{marginTop: (mobileMode ? '6px' : '16px')}" v-if='todos.length')
             v-progress-linear.my-0(v-model='progressPercentage')
@@ -117,11 +161,13 @@ v-app#app
 
 <script>
 import Item from './Item'
+import FileUpload from 'vue-upload-component'
 
 export default {
   name: 'app',
   components: {
-    Item
+    Item,
+    FileUpload
   },
   data () {
     return {
@@ -140,8 +186,12 @@ export default {
         pickerTimeMenu: false,
         time: null,
         rating: 1,
-        type: ''
+        type: '',
+        tags: [],
+        urls: [''],
+        files: []
       },
+      tagList: [],
       colors: ['#fff', '#9e9e9e', '#795548', '#ff9800', '#ffeb3b', '#8bc34a', '#03a9f4', '#673ab7', '#f44336'],
       bottomNav: 'All',
       showAddTodo: false,
@@ -257,6 +307,10 @@ export default {
     },
     filter (key) {
       console.log(key)
+    },
+    removeTag (item) {
+      this.template.tag.splice(this.template.tag.indexOf(item), 1)
+      this.template.tag = [...this.template.tag]
     }
   },
   filters: {
@@ -325,4 +379,31 @@ export default {
 .toggle-all
   .v-input__slot
     margin-bottom 8px !important
+
+.upload-drag
+  margin-top 10px
+
+  .drop-active
+    top 0
+    bottom 0
+    right 0
+    left 0
+    position fixed
+    z-index 9999
+    opacity 0.6
+    text-align center
+    background #000
+
+    h3
+      margin -0.5em 0 0
+      position absolute
+      top 50%
+      left 0
+      right 0
+      -webkit-transform translateY(-50%)
+      -ms-transform translateY(-50%)
+      transform translateY(-50%)
+      font-size 40px
+      color #fff
+      padding 0
 </style>
