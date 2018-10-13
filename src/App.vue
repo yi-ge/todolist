@@ -84,9 +84,9 @@ v-app#app
                             template(slot='selection' slot-scope='data')
                               v-chip(:selected='data.selected' close @input='removeTag(data.item)')
                                 strong {{ data.item }}
-                      v-list-tile.other-config-item
+                      v-list-tile.other-config-item(v-for="(item, index) in template.urls" :key="index")
                         v-flex
-                          v-text-field(v-model='template.urls[0]' label='URL' solo flat clearable append-icon="close")
+                          v-text-field(v-model='template.urls[index]' label='URL' @keydown="urlKeyDown($event, index)" solo flat clearable append-icon="close")
                       .other-config-item
                         .upload-drag
                           ul(v-if='template.files.length')
@@ -300,6 +300,11 @@ export default {
     removeTag (item) {
       this.template.tag.splice(this.template.tag.indexOf(item), 1)
       this.template.tag = [...this.template.tag]
+    },
+    urlKeyDown (e, index) {
+      if (e.keyCode === 13) {
+        this.template.urls.push('')
+      }
     }
   },
   filters: {
