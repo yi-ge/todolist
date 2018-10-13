@@ -87,41 +87,30 @@ v-app#app
                       v-list-tile.other-config-item
                         v-flex
                           v-text-field(v-model='template.urls[0]' label='URL' solo flat clearable append-icon="close")
-                            v-menu(slot='append-outer' style='top: -12px')
-                              v-btn(slot='activator')
-                                v-icon(left) menu
-                                |                 Menu
-                              v-card
-                                v-card-text.pa-4
-                                  v-btn(large flat color='primary' @click='')
-                                    v-icon(left) mdi-target
-                                    | Click me
-                      v-list-tile.other-config-item
-                        v-flex
-                          .upload-drag
-                            .upload
-                              ul(v-if='template.files.length')
-                                li(v-for='(file, index) in template.files' :key='file.id')
-                                  span {{file.name}}
-                                  |  -
-                                  span {{file.size | formatSize}}
-                                  |  -
-                                  span(v-if='file.error') {{file.error}}
-                                  span(v-else-if='file.success') success
-                                  span(v-else-if='file.active') active
-                                  span(v-else-if='file.active') active
-                                  span(v-else='')
-                              .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
-                                h3 Drop files to upload
-                              .upload-control
-                                FileUpload(post-action='/upload/post' :multiple='true' :drop='true' :drop-directory='true' v-model='template.files' ref='upload')
-                                  v-btn Select files
-                                    v-icon(right) attach_file
-                                v-btn(v-if='!$refs.upload || !$refs.upload.active' color="success" @click.prevent='$refs.upload.active = true')
-                                  | Start Upload
-                                  v-icon(right dark) cloud_upload
-                                v-btn(v-else @click.prevent='$refs.upload.active = false')
-                                  | Stop Upload
+                      .other-config-item
+                        .upload-drag
+                          ul(v-if='template.files.length')
+                            li(v-for='(file, index) in template.files' :key='file.id')
+                              span {{file.name}}
+                              |  -
+                              span {{file.size | formatSize}}
+                              |  -
+                              span(v-if='file.error') {{file.error}}
+                              span(v-else-if='file.success') success
+                              span(v-else-if='file.active') active
+                              span(v-else-if='file.active') active
+                              span(v-else='')
+                          .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
+                            h3 Drop files to upload
+                          .upload-control
+                            FileUpload(post-action='/upload/post' class="float-left" :multiple='true' :drop='true' :drop-directory='true' v-model='template.files' ref='upload')
+                              v-btn Select files
+                                v-icon(right) attach_file
+                            v-btn(v-if='!$refs.upload || !$refs.upload.active' class="float-left" color="success" @click.prevent='$refs.upload.active = true')
+                              | Start Upload
+                              v-icon(right dark) cloud_upload
+                            v-btn(v-else class="float-left" @click.prevent='$refs.upload.active = false')
+                              | Stop Upload
           // main
           v-card.main(:style="{marginTop: (mobileMode ? '6px' : '16px')}" v-if='todos.length')
             v-progress-linear.my-0(v-model='progressPercentage')
@@ -137,7 +126,7 @@ v-app#app
               template(v-for='todo in filteredTodos')
                 v-divider(:key='`${todo.uid}-divider`')
                 Item(:key='todo.uid' :todo.sync='todo' @removetodo='removeTodo')
-          v-card(v-else)
+          v-card(v-else style="padding: 20px")
             | No Content.
           v-btn.mt-3(@click='clearCompleted' block color='primary' depressed round v-show='todos.length > remaining')
             | Clear completed
@@ -381,7 +370,8 @@ export default {
     margin-bottom 8px !important
 
 .upload-drag
-  margin-top 10px
+  .float-left
+    float left
 
   .drop-active
     top 0
