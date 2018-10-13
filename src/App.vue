@@ -304,6 +304,10 @@ export default {
     urlKeyDown (e, index) {
       if (e.keyCode === 13) {
         this.template.urls.push('')
+      } else if (e.keyCode === 8) {
+        if (this.template.urls[index] === '' && index > 0) {
+          this.template.urls.splice(index, 1)
+        }
       }
     }
   },
