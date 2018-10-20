@@ -49,68 +49,68 @@ v-app#app
           v-dialog(v-model="showAddTodo" width="400")
             v-card.add-todo
               v-list.pa-0
-                v-expansion-panel(v-model="addTodoExpansion" expand)
-                  v-expansion-panel-content.main-input
-                    div(slot='header')
-                      v-list-tile
-                        v-text-field(:label="'New todo input'" @keydown.enter='addTodo' autofocus browser-autocomplete='off' clearable color='primary' flat hide-details maxlength='1023' placeholder='What needs to be done?' solo v-model='newTodo')
-                    v-card.other-config
-                      v-list-tile
-                        v-flex(xs7 sm7)
-                          v-menu(ref='pickerDateMenu' v-model='template.pickerDateMenu' :close-on-content-click='false' :nudge-right='40' lazy transition='scale-transition' offset-y full-width max-width='290px' min-width='290px')
-                            v-combobox(slot='activator' label='Picker Date' v-model='template.date' prepend-icon='event' clearable readonly flat hide-details solo persistent-hint)
-                            v-date-picker(v-model='template.date' color='green' full-width no-title @input='template.pickerDateMenu = false')
-                        v-flex(xs5 sm5 style='margin-left: 5%;')
-                          v-dialog(ref='pickerTimeMenu' v-model='template.pickerTimeMenu' :return-value.sync='template.time' persistent lazy full-width width='290px')
-                            v-combobox(slot='activator' label='Picker Time' v-model='template.time' prepend-icon='access_time' clearable readonly flat solo)
-                            v-time-picker(v-model='template.time' full-width color='green' format='24hr')
-                              v-spacer
-                              v-btn(flat color='primary' @click='template.pickerTimeMenu = false') Cancel
-                              v-btn(flat color='primary' @click='$refs.pickerTimeMenu.save(template.time)') OK
-                      v-list-tile.other-config-item
-                        v-flex(md4 sm4 xs4)
-                          div(:class="'type' + (template.type === 'feature' ? ' type-select' : '')" @click="template.type = 'feature'") Feature
-                          div(:class="'type' + (template.type === 'bug' ? ' type-select' : '')" style='margin-left: 5px' @click="template.type = 'bug'") Bug
-                        v-flex.important-select(md8 sm8 xs8)
-                          v-rating(v-model='template.rating')
-                            v-icon(slot='item' slot-scope='props' :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'" large @click='props.click')
-                              | {{ props.isFilled ? 'mdi-star-circle' : 'mdi-circle-outline' }}
-                      v-list-tile.other-config-item
-                        v-flex.colors(md12)
-                          .color-item(v-for='(item, index) of colors' :key='index' :style='{backgroundColor: item}')
-                      v-list-tile.other-config-item
-                        v-flex
-                          v-combobox(v-model='template.tags' :items='tagList' label='Tag' chips clearable flat solo multiple)
-                            template(slot='selection' slot-scope='data')
-                              v-chip(:selected='data.selected' close @input='removeTag(data.item)')
-                                strong {{ data.item }}
-                      v-list-tile.other-config-item(v-for="(item, index) in template.urls" :key="index")
-                        v-flex
-                          v-text-field(v-model='template.urls[index]' label='URL' @keydown="urlKeyDown($event, index)" solo flat clearable append-icon="close")
-                      .other-config-item
-                        .upload-drag
-                          ul(v-if='template.files.length')
-                            li(v-for='(file, index) in template.files' :key='file.id')
-                              span {{file.name}}
-                              |  -
-                              span {{file.size | formatSize}}
-                              |  -
-                              span(v-if='file.error') {{file.error}}
-                              span(v-else-if='file.success') success
-                              span(v-else-if='file.active') active
-                              span(v-else-if='file.active') active
-                              span(v-else='')
-                          .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
-                            h3 Drop files to upload
-                          .upload-control
-                            FileUpload(post-action='/upload/post' class="float-left" :multiple='true' :drop='true' :drop-directory='true' v-model='template.files' ref='upload')
-                              v-btn Select files
-                                v-icon(right) attach_file
-                            v-btn(v-if='!$refs.upload || !$refs.upload.active' class="float-left" color="success" @click.prevent='$refs.upload.active = true')
-                              | Start Upload
-                              v-icon(right dark) cloud_upload
-                            v-btn(v-else class="float-left" @click.prevent='$refs.upload.active = false')
-                              | Stop Upload
+                //- v-expansion-panel(v-model="addTodoExpansion" expand)
+                  //- v-expansion-panel-content.main-input
+                //- div(slot='header')
+                v-card.other-config
+                  v-list-tile
+                    v-text-field(:label="'New todo input'" @keydown.enter='addTodo' autofocus browser-autocomplete='off' clearable color='primary' flat hide-details maxlength='1023' placeholder='What needs to be done?' solo v-model='newTodo')
+                  v-list-tile
+                    v-flex(xs7 sm7)
+                      v-menu(ref='pickerDateMenu' v-model='template.pickerDateMenu' :close-on-content-click='false' :nudge-right='40' lazy transition='scale-transition' offset-y full-width max-width='290px' min-width='290px')
+                        v-combobox(slot='activator' label='Picker Date' v-model='template.date' prepend-icon='event' clearable readonly flat hide-details solo persistent-hint)
+                        v-date-picker(v-model='template.date' color='green' full-width no-title @input='template.pickerDateMenu = false')
+                    v-flex(xs5 sm5 style='margin-left: 5%;')
+                      v-dialog(ref='pickerTimeMenu' v-model='template.pickerTimeMenu' :return-value.sync='template.time' persistent lazy full-width width='290px')
+                        v-combobox(slot='activator' label='Picker Time' v-model='template.time' prepend-icon='access_time' clearable readonly flat solo)
+                        v-time-picker(v-model='template.time' full-width color='green' format='24hr')
+                          v-spacer
+                          v-btn(flat color='primary' @click='template.pickerTimeMenu = false') Cancel
+                          v-btn(flat color='primary' @click='$refs.pickerTimeMenu.save(template.time)') OK
+                  v-list-tile.other-config-item
+                    v-flex(md4 sm4 xs4)
+                      div(:class="'type' + (template.type === 'feature' ? ' type-select' : '')" @click="template.type = 'feature'") Feature
+                      div(:class="'type' + (template.type === 'bug' ? ' type-select' : '')" style='margin-left: 5px' @click="template.type = 'bug'") Bug
+                    v-flex.important-select(md8 sm8 xs8)
+                      v-rating(v-model='template.rating')
+                        v-icon(slot='item' slot-scope='props' :color="props.isFilled ? genColor(props.index) : 'grey lighten-1'" large @click='props.click')
+                          | {{ props.isFilled ? 'mdi-star-circle' : 'mdi-circle-outline' }}
+                  v-list-tile.other-config-item
+                    v-flex.colors(md12)
+                      .color-item(v-for='(item, index) of colors' :key='index' :style='{backgroundColor: item}')
+                  v-list-tile.other-config-item
+                    v-flex
+                      v-combobox(v-model='template.tags' :items='tagList' label='Tag' chips clearable flat solo multiple)
+                        template(slot='selection' slot-scope='data')
+                          v-chip(:selected='data.selected' close @input='removeTag(data.item)')
+                            strong {{ data.item }}
+                  v-list-tile.other-config-item(v-for="(item, index) in template.urls" :key="index")
+                    v-flex
+                      v-text-field(v-model='template.urls[index]' label='URL' @keydown="urlKeyDown($event, index)" solo flat clearable append-icon="close")
+                  .other-config-item
+                    .upload-drag
+                      ol(v-if='template.files.length')
+                        li(v-for='(file, index) in template.files' :key='file.id')
+                          span(class="file-name") {{file.name}}
+                          span(class="float-right") {{file.size | formatSize}}
+                          span(v-if='file.error') {{file.error}}
+                          span(v-else-if='file.success') success
+                          span(v-else-if='file.active') active
+                          span(v-else-if='file.active') active
+                          span(v-else='')
+                      .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
+                        h3 Drop files to upload
+                      .upload-control
+                        FileUpload(post-action='/upload/post' :multiple='true' :drop='true' :drop-directory='true' v-model='template.files' ref='upload')
+                          v-btn Select files
+                            v-icon(right) attach_file
+                        span(v-if='!$refs.upload || !$refs.upload.active' class="float-right")
+                          v-btn(color="success" @click.prevent='$refs.upload.active = true')
+                            | Start Upload
+                            v-icon(right dark) cloud_upload
+                        span(v-else class="float-right")
+                          v-btn(@click.prevent='$refs.upload.active = false')
+                            | Stop Upload
           // main
           v-card.main(:style="{marginTop: (mobileMode ? '6px' : '16px')}" v-if='todos.length')
             v-progress-linear.my-0(v-model='progressPercentage')
@@ -313,7 +313,14 @@ export default {
   },
   filters: {
     pluralize: (n, w) => n === 1 ? w : (w + 's'),
-    capitalize: s => s.charAt(0).toUpperCase() + s.slice(1)
+    capitalize: s => s.charAt(0).toUpperCase() + s.slice(1),
+    formatSize (bytes) {
+      if (bytes === 0) return '0 B'
+      const k = 1000 // or 1024
+      const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+      const i = Math.floor(Math.log(bytes) / Math.log(k))
+      return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
+    }
   }
 }
 </script>
@@ -379,8 +386,23 @@ export default {
     margin-bottom 8px !important
 
 .upload-drag
-  .float-left
+  ol
+    margin 10px
+    li
+      padding-right 10px
+      height 21px
+      color #6b6b6b
+
+  .file-name
+    width 280px
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+    display block
     float left
+
+  .float-right
+    float right
 
   .drop-active
     top 0
