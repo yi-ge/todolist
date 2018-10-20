@@ -91,16 +91,20 @@ v-app#app
                     .upload-drag
                       ul(v-if='template.files.length')
                         li(v-for='(file, index) in template.files' :key='file.id')
-                          span(class="float-left") {{ index + 1 }}、
-                          span(class="file-name") {{ file.name }}
-                          span(class="float-right") {{ file.size | formatSize }}
-                          span(v-if='file.error' class="float-right") {{ file.error }}
-                          span(v-else-if='file.success' class="float-right") success
-                          span(v-else-if='file.active' class="float-right") active
-                          span(v-else-if='file.active' class="float-right") active
-                          span(v-else='' class="float-right")
-                          span(class="file-preview" v-if="isImg(file)")
-                            img(:src="getFileObjectURL(file.file)" style="max-height: 50px;")
+                          .file-info
+                            span(class="float-left") {{ index + 1 }}、
+                            span(class="file-name") {{ file.name }}
+                            span(class="float-right file-size") {{ file.size | formatSize }}
+                          .file-control
+                            span(v-if="isImg(file)" class="file-preview")
+                              img(:src="getFileObjectURL(file.file)" style="max-height: 50px;")
+                            span(v-else class="file-type")
+                              | {{ file.type }}
+                            span(v-if='file.error' class="float-right") {{ file.error }}
+                            span(v-else-if='file.success' class="float-right") success
+                            span(v-else-if='file.active' class="float-right") active
+                            span(v-else='' class="float-right file-clear" @click="removeFile(index)")
+                              v-icon clear
                       .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
                         h3 Drop files to upload
                       .upload-control
@@ -262,6 +266,9 @@ export default {
     }
   },
   methods: {
+    removeFile (index) {
+      this.template.files.splice(index, 1)
+    },
     getFileObjectURL (file) { // 获取文件本地地址
       let url = null
       if (window.createObjectURL !== undefined) { // basic
@@ -277,7 +284,6 @@ export default {
       const types = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp', 'image/bmp', 'image/heic']
 
       if (types.includes(file.type)) {
-        console.log(file)
         return true
       }
 
@@ -421,9 +427,10 @@ export default {
       padding-right 10px
       min-height 42px
       color #6b6b6b
+      margin-bottom 6px
 
   .file-name
-    width 280px
+    width 260px
     overflow hidden
     text-overflow ellipsis
     white-space nowrap
@@ -436,8 +443,32 @@ export default {
   .float-right
     float right
 
+  .file-clear, .file-size
+    position absolute
+    right 0
+    top 0
+
+  .file-type
+    color #bfbfbf
+    margin-left 20px
+    font-size 9px
+
+  .file-clear
+    cursor pointer
+    user-select none
+
+    .theme--light.v-icon
+      color red
+
   .file-preview
     margin-left 20px
+
+  .file-info
+    height 22px
+    position relative
+
+  .file-control
+    position relative
 
   .drop-active
     top 0
