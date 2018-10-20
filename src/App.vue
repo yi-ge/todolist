@@ -89,15 +89,18 @@ v-app#app
                       v-text-field(v-model='template.urls[index]' label='URL' @keydown="urlKeyDown($event, index)" solo flat clearable append-icon="close")
                   .other-config-item
                     .upload-drag
-                      ol(v-if='template.files.length')
+                      ul(v-if='template.files.length')
                         li(v-for='(file, index) in template.files' :key='file.id')
-                          span(class="file-name") {{file.name}}
-                          span(class="float-right") {{file.size | formatSize}}
-                          span(v-if='file.error') {{file.error}}
-                          span(v-else-if='file.success') success
-                          span(v-else-if='file.active') active
-                          span(v-else-if='file.active') active
-                          span(v-else='')
+                          span(class="float-left") {{ index + 1 }}、
+                          span(class="file-name") {{ file.name }}
+                          span(class="float-right") {{ file.size | formatSize }}
+                          span(v-if='file.error' class="float-right") {{ file.error }}
+                          span(v-else-if='file.success' class="float-right") success
+                          span(v-else-if='file.active' class="float-right") active
+                          span(v-else-if='file.active' class="float-right") active
+                          span(v-else='' class="float-right")
+                          span(class="file-preview" v-if="isImg(file)")
+                            img(:src="getFileObjectURL(file.file)" style="max-height: 50px;")
                       .drop-active(v-show='$refs.upload && $refs.upload.dropActive')
                         h3 Drop files to upload
                       .upload-control
@@ -259,6 +262,27 @@ export default {
     }
   },
   methods: {
+    getFileObjectURL (file) { // 获取文件本地地址
+      let url = null
+      if (window.createObjectURL !== undefined) { // basic
+        url = window.createObjectURL(file)
+      } else if (window.URL !== undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file)
+      } else if (window.webkitURL !== undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file)
+      }
+      return url
+    },
+    isImg (file) {
+      const types = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp', 'image/bmp', 'image/heic']
+
+      if (types.includes(file.type)) {
+        console.log(file)
+        return true
+      }
+
+      return false
+    },
     showAddTodoHander () {
       this.showAddTodo = true
       setTimeout(() => {
@@ -386,11 +410,16 @@ export default {
     margin-bottom 8px !important
 
 .upload-drag
-  ol
+  ul
     margin 10px
+    padding-left 0
+
     li
+      padding 0
+      margin 0
+      list-style none
       padding-right 10px
-      height 21px
+      min-height 42px
       color #6b6b6b
 
   .file-name
@@ -401,8 +430,14 @@ export default {
     display block
     float left
 
+  .float-left
+    float left
+
   .float-right
     float right
+
+  .file-preview
+    margin-left 20px
 
   .drop-active
     top 0
