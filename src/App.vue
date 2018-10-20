@@ -118,6 +118,10 @@ v-app#app
                         span(v-else class="float-right")
                           v-btn(@click.prevent='$refs.upload.active = false')
                             | Stop Upload
+                  v-list-tile.other-config-item
+                    v-flex
+                      v-btn(class="float-left" @click.prevent="") SUBMIT
+                      v-btn(class="float-left" @click="") CLOSE
           // main
           v-card.main(:style="{marginTop: (mobileMode ? '6px' : '16px')}" v-if='todos.length')
             v-progress-linear.my-0(v-model='progressPercentage')
@@ -415,6 +419,12 @@ export default {
   .v-input__slot
     margin-bottom 8px !important
 
+.float-left
+  float left
+
+.float-right
+  float right
+
 .upload-drag
   ul
     margin 10px
@@ -436,12 +446,6 @@ export default {
     white-space nowrap
     display block
     float left
-
-  .float-left
-    float left
-
-  .float-right
-    float right
 
   .file-clear, .file-size
     position absolute
