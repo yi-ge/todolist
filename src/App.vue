@@ -54,7 +54,7 @@ v-app#app
                 //- div(slot='header')
                 v-card.other-config
                   v-list-tile
-                    v-text-field(:label="'New todo input'" @keydown.enter='addTodo' autofocus browser-autocomplete='off' clearable color='primary' flat hide-details maxlength='1023' placeholder='What needs to be done?' solo v-model='newTodo')
+                    v-text-field(:label="'New todo input'" @keydown.enter='addTodo' autofocus browser-autocomplete='off' clearable color='primary' flat hide-details maxlength='1023' placeholder='What needs to be done?' solo v-model='newTodo' append-outer-icon="add" @click:append-outer="addTodo")
                   v-list-tile
                     v-flex(xs7 sm7)
                       v-menu(ref='pickerDateMenu' v-model='template.pickerDateMenu' :close-on-content-click='false' :nudge-right='40' lazy transition='scale-transition' offset-y full-width max-width='290px' min-width='290px')
@@ -118,10 +118,6 @@ v-app#app
                         span(v-else class="float-right")
                           v-btn(@click.prevent='$refs.upload.active = false')
                             | Stop Upload
-                  v-list-tile.other-config-item
-                    v-flex
-                      v-btn(class="float-left" @click.prevent="") SUBMIT
-                      v-btn(class="float-left" @click="") CLOSE
           // main
           v-card.main(:style="{marginTop: (mobileMode ? '6px' : '16px')}" v-if='todos.length')
             v-progress-linear.my-0(v-model='progressPercentage')
@@ -136,7 +132,7 @@ v-app#app
             v-list.pa-0
               template(v-for='todo in filteredTodos')
                 v-divider(:key='`${todo.uid}-divider`')
-                Item(:key='todo.uid' :todo.sync='todo' @removetodo='removeTodo')
+                Item(:key='todo.uid' :todo.sync='todo' @remove-todo='removeTodo')
           v-card(v-else style="padding: 20px")
             | No Content.
           v-btn.mt-3(@click='clearCompleted' block color='primary' depressed round v-show='todos.length > remaining')

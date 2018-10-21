@@ -45,7 +45,7 @@ export default {
       }
     },
     removeTodo (todo) {
-      this.$emit('removeTodo', todo)
+      this.$emit('remove-todo', todo)
     },
     toggleTodo (todo) {
       todo.done = !todo.done
