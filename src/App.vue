@@ -49,12 +49,10 @@ v-app#app
           v-dialog(v-model="showAddTodo" width="400")
             v-card.add-todo
               v-list.pa-0
-                //- v-expansion-panel(v-model="addTodoExpansion" expand)
-                  //- v-expansion-panel-content.main-input
-                //- div(slot='header')
-                v-card.other-config
-                  v-list-tile
+                v-card
+                  v-list-tile(class="todo-title")
                     v-text-field(:label="'New todo input'" @keydown.enter='addTodo' autofocus browser-autocomplete='off' clearable color='primary' flat hide-details maxlength='1023' placeholder='What needs to be done?' solo v-model='newTodo' append-outer-icon="add" @click:append-outer="addTodo")
+                v-card.other-config
                   v-list-tile
                     v-flex(xs7 sm7)
                       v-menu(ref='pickerDateMenu' v-model='template.pickerDateMenu' :close-on-content-click='false' :nudge-right='40' lazy transition='scale-transition' offset-y full-width max-width='290px' min-width='290px')
@@ -158,6 +156,7 @@ v-app#app
 <script>
 import Item from './Item'
 import FileUpload from 'vue-upload-component'
+import nanoid from 'nanoid'
 
 export default {
   name: 'app',
@@ -187,6 +186,7 @@ export default {
         urls: [''],
         files: []
       },
+      templateSample: null,
       tagList: [],
       colors: ['#fff', '#9e9e9e', '#795548', '#ff9800', '#ffeb3b', '#8bc34a', '#03a9f4', '#673ab7', '#f44336'],
       bottomNav: 'All',
@@ -258,7 +258,7 @@ export default {
     }
   },
   created () {
-
+    this.templateSample = this.deepCopy(this.template)
   },
   mounted () {
     window.onresize = () => {
@@ -302,13 +302,15 @@ export default {
     addTodo () {
       const text = this.newTodo.trim()
       if (text) {
-        this.todos.push({
-          uid: Date.now(),
+        this.todos.push(Object.assign({
+          uid: nanoid(),
           text,
-          done: false
-        })
+          done: false,
+          doneTime: null
+        }, this.template))
       }
       this.newTodo = ''
+      this.template = this.deepCopy(this.templateSample)
     },
     removeTodo (todo) {
       this.todos.splice(this.todos.indexOf(todo), 1)
@@ -371,6 +373,12 @@ export default {
 .main-input
   .v-expansion-panel__body
     padding 3px 6px 10px 6px
+
+.todo-title
+  height 54px
+
+  .v-list__tile
+    height 54px
 
 .other-config
   padding-top 5px
